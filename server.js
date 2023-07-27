@@ -15,7 +15,21 @@ mongoose.connect(uri,{useNewUrlParser:true})
     console.error("DB is not connected")
 })
 
+//! Schema
+const VisitorSchema = new mongoose.Schema({
+    name:{
+        type:String,
+    },
+    email:{
+        type:String,
+    },
+    password:{
+        type:String,
+    }
+})
 
+//! Model
+const Visitors = mongoose.model("Visitor",VisitorSchema)
 
 //! Connection Check
 app.get("/",(req,res)=>{

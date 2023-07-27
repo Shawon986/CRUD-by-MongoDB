@@ -5,6 +5,11 @@ const app = express()
 app.use(bodyParser.json())
 
 
+//! Connection Check
+app.get("/",(req,res)=>{
+    res.json({message:"Welcome to Crud app"})
+})
+
 
 const port = process.env.PORT 
 app.listen(port,()=>{

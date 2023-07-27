@@ -59,6 +59,17 @@ app.post("/visitors",async(req,res)=>{
 
 })
 
+//! Get all visitors
+app.get("/visitors",async(req,res)=>{
+    try {
+        const visitor = await Visitors.find()
+        res.json(visitor)
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({message:"Something went wrong with the server !!!"})
+    }
+})
+
 
 
 const port = process.env.PORT 

@@ -86,6 +86,24 @@ app.get("/visitors/:id",async(req,res)=>{
     }
 })
 
+//! Update a visitor by id
+app.put("/visitors/:id",async(req,res)=>{
+    try {
+        const salt =await bcrypt.genSalt(10)
+        const hashedPass =await bcrypt.hash(req.body.password,salt)
+        const id = req.params.id
+        const visitor = await Visitors.findByIdAndUpdate(id,req.body,{new:true})
+        if(!visitor){
+            res.status(401).json({message:"Visitor not found"})
+        }else{
+            visitor.password= hashedPass
+            res.json(visitor)
+            await visitor.save()
+        }
+    } catch (error) {
+        
+    }
+})
 
 
 const port = process.env.PORT 

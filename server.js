@@ -2,6 +2,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const dotenv = require("dotenv").config()
 const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
 const app = express()
 app.use(bodyParser.json())
 
@@ -39,10 +40,13 @@ app.get("/",(req,res)=>{
 //! Create Visitor
 app.post("/visitors",async(req,res)=>{
     try {
+        const salt =await bcrypt.genSalt(10)
+        const hashedPass =await bcrypt.hash(req.body.password,salt)
+        const password = hashedPass
         const visitorObject ={
             name:req.body.name,
             email:req.body.email,
-            password:req.body.password
+            password:password
         }
         const visitor = new Visitors(visitorObject)
         res.status(201).json(visitor)

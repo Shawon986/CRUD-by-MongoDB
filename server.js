@@ -105,6 +105,21 @@ app.put("/visitors/:id",async(req,res)=>{
     }
 })
 
+//! Delete a visitor by id
+app.delete("/visitors/:id",async(req,res)=>{
+    try {
+        const id = req.params.id
+        const visitor = await Visitors.findByIdAndDelete(id)
+        if(!visitor){
+            res.status(401).json({message:"Visitor not found"})
+        }else{
+            res.json(visitor)
+        }
+    } catch (error) {
+        
+    }
+})
+
 
 const port = process.env.PORT 
 app.listen(port,()=>{

@@ -70,6 +70,22 @@ app.get("/visitors",async(req,res)=>{
     }
 })
 
+//! Get a visitor by id
+app.get("/visitors/:id",async(req,res)=>{
+    try {
+        const id = req.params.id
+        const visitor = await Visitors.findById(id)
+        if(!visitor){
+            res.status(401).json({message:"Visitor not found"})
+        }else{
+            res.json(visitor)
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({message:"Something went wrong with the server !!!"})
+    }
+})
+
 
 
 const port = process.env.PORT 
